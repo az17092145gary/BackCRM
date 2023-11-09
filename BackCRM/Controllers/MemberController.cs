@@ -1,10 +1,6 @@
 ﻿using BackCRM.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics.Metrics;
 
 namespace BackCRM.Controllers
 {
@@ -13,59 +9,45 @@ namespace BackCRM.Controllers
 
     public class MemberController : ControllerBase
     {
-        private MemberService _memberService;
+        private MemberFactory _memberService;
 
-        public MemberController(MemberService service)
+        public MemberController()
         {
-            _memberService = service;
+            _memberService = new MemberFactory();
         }
         [HttpGet("getAllMember")]
         public dynamic getAllMember()
         {
-            using (SqlConnection connection = new SqlConnection(_memberService.connectionString))
-            {
-                var data = _memberService.getAllMember(connection);
-                var result = JsonConvert.SerializeObject(data);
-                return Ok(result);
-            }
+            var data = _memberService.getAllMember();
+            var result = JsonConvert.SerializeObject(data);
+            return Ok(result);
         }
         [HttpGet("getMember{id}")]
         public dynamic getMember(string id)
         {
-            using (SqlConnection connection = new SqlConnection(_memberService.connectionString))
-            {
-                var data = _memberService.getMember(id, connection);
-                var result = JsonConvert.SerializeObject(data);
-                return Ok(result);
-            }
+            var data = _memberService.getMember(id);
+            var result = JsonConvert.SerializeObject(data);
+            return Ok(result);
         }
         [HttpPost("createMember")]
         public dynamic createMember(Member member)
         {
-            using (SqlConnection connection = new SqlConnection(_memberService.connectionString))
-            {
-                _memberService.createMember(member, connection);
-                return Ok();
-            }
 
+            var result = _memberService.createMember(member);
+            return result > 0 ? Ok() : NotFound();
         }
         [HttpPost("editMember")]
-        public dynamic editMember(Dictionary<string,string> member)
+        public dynamic editMember(Dictionary<string, string> member)
         {
-            using (SqlConnection connection = new SqlConnection(_memberService.connectionString))
-            {
-                _memberService.editMember(member, connection);
-                return Ok();
-            }
+            var result = _memberService.editMember(member);
+            return result > 0 ? Ok() : NotFound();
+
         }
         [HttpGet("deleteMember{id}")]
         public dynamic deleteMember(string id)
         {
-            using (SqlConnection connection = new SqlConnection(_memberService.connectionString))
-            {
-                _memberService.deleteMember(id, connection);
-                return Ok();
-            }
+            var result = _memberService.deleteMember(id);
+            return result > 0 ? Ok() : NotFound();
         }
     }
 }

@@ -5,28 +5,29 @@ using System.Numerics;
 
 namespace BackCRM.Model
 {
-    public class MemberService
+    public class MemberFactory
     {
-        public string connectionString = "Data Source=F1M121101N;Initial Catalog=JINDI;Integrated Security=True";
-        public MemberService()
+        private string _connectionString = "Data Source=F1M121101N;Initial Catalog=JINDI;Integrated Security=True";
+        private SqlConnection _connection;
+        public MemberFactory()
         {
+            _connection = new SqlConnection(_connectionString);
         }
-        public IEnumerable<Member> getAllMember(SqlConnection connection)
+        public IEnumerable<Member> getAllMember()
         {
-            var memlists = connection.Query<Member>("select * from EMPL");
+            var memlists = _connection.Query<Member>("select * from EMPL");
             return memlists;
         }
-
-        public dynamic getMember(string id, SqlConnection connection)
+        public dynamic getMember(string id)
         {
-            var mem = connection.QueryFirst("select * from EMPL where id = @id", new { id });
+            var mem = _connection.QueryFirst("select * from EMPL where id = @id", new { id });
             return mem;
         }
-        public void createMember(Member member, SqlConnection connection)
+        public dynamic createMember(Member member)
         {
             string str = "Insert EMPL (EMPID,EMPNAME,PHONE,EMAIL,DEPTID,BIRTHDAY,A_SYSDT,A_USER)";
             str += "values(@id,@EMPNAME,@PHONE,@EMAIL,@DEPTID,@BIRTHDAY,@A_SYSDT,@A_USER)";
-            connection.Execute(str, new
+            var result = _connection.Execute(str, new
             {
                 id = member.EMPID,
                 member.EMPNAME,
@@ -37,8 +38,9 @@ namespace BackCRM.Model
                 member.A_SYSDT,
                 member.A_USER
             });
+            return result;
         }
-        public void editMember(Dictionary<string, string> member, SqlConnection connection)
+        public dynamic editMember(Dictionary<string, string> member)
         {
             //sqlinject沒檔
             int currentItem = 0;
@@ -53,12 +55,14 @@ namespace BackCRM.Model
                 }
             }
             str += $"where EMPID = '{member["EMPID"]}'";
-            connection.Execute(str);
+            var result = _connection.Execute(str);
+            return result;
         }
-        public void deleteMember(string id, SqlConnection connection)
+        public dynamic deleteMember(string id)
         {
             string str = "Delete EMPL where EMPID = @id";
-            connection.Execute(str, new { id });
+            var result = _connection.Execute(str, new { id });
+            return result;
         }
     }
 

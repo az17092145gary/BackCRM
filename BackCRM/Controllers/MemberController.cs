@@ -11,9 +11,9 @@ namespace BackCRM.Controllers
     {
         private MemberFactory _memberService;
 
-        public MemberController()
+        public MemberController(IConfiguration configuratio)
         {
-            _memberService = new MemberFactory();
+            _memberService = new MemberFactory(configuratio);
         }
         [HttpGet("getAllMember")]
         public dynamic getAllMember()

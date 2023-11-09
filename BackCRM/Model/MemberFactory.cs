@@ -7,11 +7,10 @@ namespace BackCRM.Model
 {
     public class MemberFactory
     {
-        private string _connectionString = "Data Source=F1M121101N;Initial Catalog=JINDI;Integrated Security=True";
         private SqlConnection _connection;
-        public MemberFactory()
+        public MemberFactory(IConfiguration configuratio)
         {
-            _connection = new SqlConnection(_connectionString);
+            _connection = new SqlConnection(configuratio.GetConnectionString("JINDI"));
         }
         public IEnumerable<Member> getAllMember()
         {

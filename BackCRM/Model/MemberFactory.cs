@@ -10,7 +10,7 @@ namespace BackCRM.Model
         private SqlConnection _connection;
         public MemberFactory(IConfiguration configuratio)
         {
-            _connection = new SqlConnection(configuratio.GetConnectionString("JINDI"));
+            _connection = new SqlConnection(configuratio.GetConnectionString("GaryJINDI"));
         }
         public IEnumerable<Member> getAllMember()
         {
@@ -56,6 +56,7 @@ namespace BackCRM.Model
             str += $"where EMPID = '{member["EMPID"]}'";
             var result = _connection.Execute(str);
             return result;
+
         }
         public dynamic deleteMember(string id)
         {

@@ -1,4 +1,5 @@
-using BackCRM;
+using BackCRM.Model;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {

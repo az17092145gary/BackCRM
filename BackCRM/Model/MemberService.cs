@@ -1,10 +1,9 @@
-﻿using BackCRM.Controllers;
-using Dapper;
+﻿using Dapper;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using System.Numerics;
 
-namespace BackCRM
+namespace BackCRM.Model
 {
     public class MemberService
     {
@@ -14,7 +13,6 @@ namespace BackCRM
         }
         public IEnumerable<Member> getAllMember(SqlConnection connection)
         {
-
             var memlists = connection.Query<Member>("select * from EMPL");
             return memlists;
         }
@@ -31,13 +29,13 @@ namespace BackCRM
             connection.Execute(str, new
             {
                 id = member.EMPID,
-                EMPNAME = member.EMPNAME,
-                PHONE = member.PHONE,
-                EMAIL = member.EMAIL,
-                DEPTID = member.DEPTID,
-                BIRTHDAY = member.BIRTHDAY,
-                A_SYSDT = member.A_SYSDT,
-                A_USER = member.A_USER
+                member.EMPNAME,
+                member.PHONE,
+                member.EMAIL,
+                member.DEPTID,
+                member.BIRTHDAY,
+                member.A_SYSDT,
+                member.A_USER
             });
         }
         public void editMember(Dictionary<string, string> member, SqlConnection connection)

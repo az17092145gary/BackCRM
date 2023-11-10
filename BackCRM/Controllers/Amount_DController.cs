@@ -18,7 +18,9 @@ namespace BackCRM.Controllers
         [HttpGet]
         public IEnumerable<Amount_D> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<Amount_D> datalist = new List<Amount_D>();
+            datalist = _factory
+            return List<Amount_D>;
         }
 
         // GET api/<Amount_DController>/5

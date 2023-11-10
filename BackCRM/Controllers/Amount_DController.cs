@@ -29,13 +29,13 @@ namespace BackCRM.Controllers
         }
 
         [HttpPost("create")]
-        public dynamic createMember(Amount_D amount)
+        public dynamic createMember(Amount_D amount, string user)
         {
             var result = _factory.create(amount);
             return result > 0 ? Ok() : NotFound();
         }
         [HttpPost("edit")]
-        public dynamic editMember(Amount_D amount)
+        public dynamic editMember(Amount_D amount, string user)
         {
             amount.u_sysdt = DateTime.Now;
             var result = _factory.edit(amount);
@@ -46,7 +46,7 @@ namespace BackCRM.Controllers
         [HttpGet("delete{id}")]
         public dynamic delete(string id)
         {
-            var result = _factory.delete("DELETE AMOUNT_D WHERE ID = @id",id);
+            var result = _factory.delete("DELETE AMOUNT_D WHERE ID = @id", id);
             return result > 0 ? Ok() : NotFound();
         }
     }

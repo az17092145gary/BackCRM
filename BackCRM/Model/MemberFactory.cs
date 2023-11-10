@@ -10,7 +10,7 @@ namespace BackCRM.Model
         private SqlConnection _connection;
         public MemberFactory(IConfiguration configuratio)
         {
-            _connection = new SqlConnection(configuratio.GetConnectionString("GaryJINDI"));
+            _connection = new SqlConnection(configuratio.GetConnectionString("JINDI"));
         }
         public IEnumerable<Member> getAllMember()
         {

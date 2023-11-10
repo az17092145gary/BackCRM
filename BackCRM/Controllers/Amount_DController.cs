@@ -15,37 +15,39 @@ namespace BackCRM.Controllers
             _factory = new Amount_DFactory(configuration);
         }
         // GET: api/<Amount_DController>
-        //[HttpGet]
-        //public IEnumerable<Amount_D> Get()
-        //{
-        //    List<Amount_D> datalist = new List<Amount_D>();
-        //    datalist = _factory;
-        //    return List<Amount_D>;
-        //}
+        [HttpGet]
+        public dynamic Get()
+        {
+            return Ok(_factory.getAll("SELECT * FROM AMOUNT_D"));
+        }
 
         // GET api/<Amount_DController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public dynamic Get(int id)
         {
-            return "value";
+            return Ok(_factory.getOne("SELECT * FROM AMOUNT_D where id = @id", id.ToString()));
         }
 
-        // POST api/<Amount_DController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("create")]
+        public dynamic createMember(Amount_D amount, string user)
         {
+            var result = _factory.create(amount);
+            return result > 0 ? Ok() : NotFound();
+        }
+        [HttpPost("edit")]
+        public dynamic editMember(Amount_D amount, string user)
+        {
+            amount.u_sysdt = DateTime.Now;
+            var result = _factory.edit(amount);
+            return result > 0 ? Ok() : NotFound();
+
         }
 
-        // PUT api/<Amount_DController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("delete{id}")]
+        public dynamic delete(string id)
         {
-        }
-
-        // DELETE api/<Amount_DController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result = _factory.delete("DELETE AMOUNT_D WHERE ID = @id", id);
+            return result > 0 ? Ok() : NotFound();
         }
     }
 }

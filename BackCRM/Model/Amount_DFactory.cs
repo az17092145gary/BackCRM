@@ -1,19 +1,12 @@
-﻿using Dapper;
+﻿using BackCRM.Base;
+using Dapper;
 using System.Data.SqlClient;
 
 namespace BackCRM.Model
 {
-    public class Amount_DFactory
+    public class Amount_DFactory:FactoryBase<Amount_D>
     {
-        private SqlConnection _conn;
-        public Amount_DFactory(IConfiguration configuration)
-        {
-            _conn = new SqlConnection(configuration.GetConnectionString("JINDI"));
-        }
+        public Amount_DFactory(IConfiguration configuration) : base(configuration) { }
 
-        public List<Amount_D> GetAll()
-        {
-            return _conn.Query<Amount_D>("SELECT * FROM AMOUNT_D").ToList();
-        }
     }
 }

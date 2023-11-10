@@ -26,17 +26,7 @@ namespace BackCRM.Model
         {
             string str = "Insert EMPL (EMPID,EMPNAME,PHONE,EMAIL,DEPTID,BIRTHDAY,A_SYSDT,A_USER)";
             str += "values(@id,@EMPNAME,@PHONE,@EMAIL,@DEPTID,@BIRTHDAY,@A_SYSDT,@A_USER)";
-            var result = _connection.Execute(str, new
-            {
-                id = member.EMPID,
-                member.EMPNAME,
-                member.PHONE,
-                member.EMAIL,
-                member.DEPTID,
-                member.BIRTHDAY,
-                member.A_SYSDT,
-                member.A_USER
-            });
+            var result = _connection.Execute(str, member);
             return result;
         }
         public dynamic editMember(Dictionary<string, string> member)

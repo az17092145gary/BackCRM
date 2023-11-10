@@ -14,7 +14,7 @@ namespace BackCRM.Model
         {
             var id = account["id"];
             var pwd = account["pwd"];
-            var result = _sqlConnection.Query($"select * from EMPL where EMPID = @id and EMPPWD = @pwd", new { id, pwd });
+            var result = _sqlConnection.Query($"select * from EMPL where EMPID = @id and EMPPWD = @pwd", new { id, pwd }).Count();
             return result;
         }
     }

@@ -15,13 +15,13 @@ namespace BackCRM.Controllers
             _factory = new Amount_DFactory(configuration);
         }
         // GET: api/<Amount_DController>
-        [HttpGet]
-        public IEnumerable<Amount_D> Get()
-        {
-            List<Amount_D> datalist = new List<Amount_D>();
-            datalist = _factory
-            return List<Amount_D>;
-        }
+        //[HttpGet]
+        //public IEnumerable<Amount_D> Get()
+        //{
+        //    List<Amount_D> datalist = new List<Amount_D>();
+        //    datalist = _factory;
+        //    return List<Amount_D>;
+        //}
 
         // GET api/<Amount_DController>/5
         [HttpGet("{id}")]

@@ -17,7 +17,10 @@ namespace BackCRM.Controllers
         public dynamic LoginCheckMember(Dictionary<string, string> account)
         {
             var result = _loginFactory.LoginCheckMember(account);
-            return result != null ? Ok() : NotFound();
+            if (result > 0) {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
 
@@ -36,19 +37,16 @@ namespace BackCRM.Base
         public virtual string getInsertString(T model)
         {
             string[] modelArray = model.ToString().Split('.');
-            string sql = "INSERT " + modelArray[modelArray.Length - 1].ToUpper() + "(";
+            string sql = $"INSERT {modelArray[modelArray.Length - 1]}";
             PropertyInfo[] properties = model.GetType().GetProperties();
-            string schema = "";
             string values = "";
             foreach (PropertyInfo property in properties)
                 if (property.Name != "id")
                 {
-                    schema += property.Name.ToUpper() + ",";
                     values += "@" + property.Name.ToUpper() + ",";
                 }
-            schema = schema.Substring(0, schema.Length - 1) + ") VALUES(";
-            values = values.Substring(0, values.Length - 1) + ")";
-            return sql + schema + values;
+            values = " Values(" + values.Substring(0, values.Length - 1) + ")";
+            return sql + values;
         }
         public virtual string getUpdateString(T model)
         {

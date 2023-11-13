@@ -16,7 +16,7 @@ namespace BackCRM.Controllers
         }
         // GET: api/<BudgetController>
         [HttpGet]
-        public dynamic Get()
+        public dynamic Get(string? user)
         {
             return Ok(_factory.getAll("SELECT * FROM BUDGET"));
         }

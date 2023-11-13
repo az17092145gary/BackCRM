@@ -16,9 +16,12 @@ namespace BackCRM.Controllers
         [HttpPost]
         public dynamic LoginCheckMember(Dictionary<string, string> account)
         {
-            var result = _loginFactory.LoginCheckMember(account);
-            if (result > 0) {
-                return Ok();
+            var EMPID = account["EMPID"];
+            var EMPPWD = account["EMPPWD"];
+            var result = _loginFactory.LoginEMPLCheck("select * from EMPL where EMPID = @EMPID and EMPPWD = @EMPPWD", EMPID, EMPPWD);
+            if (result != null)
+            {
+                return Ok(result.id);
             }
             return NotFound();
         }

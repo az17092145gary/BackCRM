@@ -22,12 +22,25 @@ namespace BackCRM.Controllers
             var result = JsonConvert.SerializeObject(data);
             return Ok(result);
         }
-        [HttpGet("getEMPL{id}")]
+        [HttpGet("getEMPL")]
         public dynamic getEMPL(string id)
         {
-            var data = _memberService.getOne("SELECT * FROM EMPL where id = @id", id);
-            var result = JsonConvert.SerializeObject(data);
-            return Ok(result);
+            if (id == "10")
+            {
+                var data = _memberService.getAll("select * from empl");
+                return Ok(data);
+            }
+            else
+            {
+                var data = _memberService.getOne("select * from empl where id = @id", id);
+                var list = new List<EMPL>
+            {
+                data
+            };
+                var result = JsonConvert.SerializeObject(list);
+                return Ok(result);
+            }
+           
         }
         [HttpPost("createEMPL")]
         public dynamic createEMPL(EMPL empl)
@@ -42,7 +55,7 @@ namespace BackCRM.Controllers
             return result > 0 ? Ok() : NotFound();
 
         }
-        [HttpGet("deleteEMPL{id}")]
+        [HttpGet("deleteEMPL")]
         public dynamic deleteEMPL(string id)
         {
             var result = _memberService.delete("DELETE EMPL WHERE ID = @id", id);

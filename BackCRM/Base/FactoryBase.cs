@@ -7,7 +7,7 @@ namespace BackCRM.Base
 {
     public abstract class FactoryBase<T>
     {
-        private SqlConnection _conn { get; set; }
+        public SqlConnection _conn { get; set; }
         public FactoryBase(IConfiguration IConfiguration)
         {
             _conn = new SqlConnection(IConfiguration.GetConnectionString("JINDI"));

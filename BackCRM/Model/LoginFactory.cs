@@ -1,20 +1,16 @@
-﻿using Dapper;
+﻿using BackCRM.Base;
+using Dapper;
 using System.Data.SqlClient;
 
 namespace BackCRM.Model
 {
-    public class LoginFactory
+    public class LoginFactory : FactoryBase<EMPL>
     {
         private SqlConnection _sqlConnection;
-        public LoginFactory(IConfiguration configuration)
+        public LoginFactory(IConfiguration configuration) : base(configuration) { }
+        public EMPL LoginEMPLCheck(string sql, string EMPID, string EMPPWD)
         {
-            _sqlConnection = new SqlConnection(configuration.GetConnectionString("JINDI"));
-        }
-        public dynamic LoginCheckMember(Dictionary<string, string> account)
-        {
-            var id = account["id"];
-            var pwd = account["pwd"];
-            var result = _sqlConnection.Query($"select * from EMPL where EMPID = @id and EMPPWD = @pwd", new { id, pwd }).Count();
+            var result = _conn.QueryFirst<EMPL>(sql, new { EMPID, EMPPWD });
             return result;
         }
     }

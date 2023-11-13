@@ -28,7 +28,8 @@ namespace BackCRM.Controllers
             if (id == "10")
             {
                 var data = _memberService.getAll("select * from empl");
-                return Ok(data);
+                var result = JsonConvert.SerializeObject(data);
+                return Ok(result);
             }
             else
             {

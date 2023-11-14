@@ -41,7 +41,7 @@ namespace BackCRM.Controllers
                 var result = JsonConvert.SerializeObject(list);
                 return Ok(result);
             }
-           
+
         }
         [HttpPost("createEMPL")]
         public dynamic createEMPL(EMPL empl)

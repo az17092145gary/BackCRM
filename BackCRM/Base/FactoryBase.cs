@@ -14,6 +14,7 @@ namespace BackCRM.Base
         }
 
         public virtual List<T> getAll(string sql) => _conn.Query<T>(sql).ToList();
+        public virtual List<T> getAll() => _conn.Query<T>("SELECT * FROM " + typeof(T).Name.ToUpper()).ToList();
 
         public virtual T getOne(string sql, string id) => _conn.QueryFirst<T>(sql, new { id });
         public dynamic create(T model)
@@ -29,7 +30,7 @@ namespace BackCRM.Base
             return result;
 
         }
-        public dynamic delete(string sql, string id)=> _conn.Execute(sql, new { id });
+        public dynamic delete(string sql, string id) => _conn.Execute(sql, new { id });
 
         public virtual string getInsertString(T model)
         {

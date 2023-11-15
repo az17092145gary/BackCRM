@@ -1,4 +1,5 @@
 ﻿using BackCRM.Base;
+using Dapper;
 
 namespace BackCRM.Model
 {

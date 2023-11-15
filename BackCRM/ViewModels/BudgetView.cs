@@ -2,7 +2,8 @@
 {
     public class BudgetView
     {
-        public int id { get; set; }
+        public int? id { get; set; }
+        public string? empid { get; set; }
         public string? empname { get; set; }
         public int budget { get; set; }
         public DateTime? a_sysdt { get; set; }

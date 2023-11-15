@@ -14,14 +14,17 @@ namespace BackCRM.Controllers
         {
             _factory = new NoteFactory(configuration);
         }
-        // GET: api/<BudgetController>
+        // GET: api/<NoteController>
         [HttpGet]
-        public dynamic Get()
+        public dynamic Get(string user)
         {
-            return Ok(_factory.getAll("SELECT * FROM NOTE"));
+            string sql = "SELECT * FROM NOTE";
+            if (user != "A00")
+                sql += " WHERE EMPLID = " + user;
+            return Ok(_factory.getAll(sql));
         }
 
-        // GET api/<BudgetController>/5
+        // GET api/<NoteController>/5
         [HttpGet("{id}")]
         public dynamic Get(int id)
         {

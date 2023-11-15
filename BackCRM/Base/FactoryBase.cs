@@ -29,10 +29,7 @@ namespace BackCRM.Base
             return result;
 
         }
-        public dynamic delete(string sql, string id)
-        {
-            return _conn.Execute(sql, new { id });
-        }
+        public dynamic delete(string sql, string id)=> _conn.Execute(sql, new { id });
 
         public virtual string getInsertString(T model)
         {

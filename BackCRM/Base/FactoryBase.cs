@@ -16,7 +16,7 @@ namespace BackCRM.Base
         public virtual List<T> getAll(string sql) => _conn.Query<T>(sql).ToList();
         public virtual List<T> getAll() => _conn.Query<T>("SELECT * FROM " + typeof(T).Name.ToUpper()).ToList();
 
-        public virtual T getOne(string sql, string id) => _conn.QueryFirst<T>(sql, new { id });
+        public virtual T getOne(string sql, string EMPID) => _conn.QueryFirst<T>(sql, new { EMPID });
         public dynamic create(T model)
         {
             string sql = getInsertString(model);

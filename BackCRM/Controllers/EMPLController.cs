@@ -23,9 +23,9 @@ namespace BackCRM.Controllers
             return Ok(result);
         }
         [HttpGet("getEMPL")]
-        public dynamic getEMPL(string id)
+        public dynamic getEMPL(string EMPID)
         {
-            if (id == "10")
+            if (EMPID == "A000")
             {
                 var data = _memberService.getAll("select * from empl");
                 var result = JsonConvert.SerializeObject(data);
@@ -33,7 +33,7 @@ namespace BackCRM.Controllers
             }
             else
             {
-                var data = _memberService.getOne("select * from empl where id = @id", id);
+                var data = _memberService.getOne("select * from empl where EMPID = @EMPID", EMPID);
                 var list = new List<EMPL>
             {
                 data

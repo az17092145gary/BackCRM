@@ -2,7 +2,7 @@
 {
     public class Note
     {
-        public int id { get; set; }
+        public int? id { get; set; }
         public string? emplid { get; set; }
         public string? custid { get; set; }
         public string? custname { get; set; }

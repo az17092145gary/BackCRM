@@ -1,5 +1,7 @@
 ﻿using BackCRM.Model;
+using BackCRM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,15 +12,22 @@ namespace BackCRM.Controllers
     public class Amount_DController : ControllerBase
     {
         private readonly Amount_DFactory _factory;
+        private readonly IConfiguration _config;
         public Amount_DController(IConfiguration configuration)
         {
-            _factory = new Amount_DFactory(configuration);
+            _config = configuration;
+            _factory = new Amount_DFactory(_config);
         }
         // GET: api/<Amount_DController>
         [HttpGet]
-        public dynamic Get()
+        public dynamic Get(string? user)
         {
-            return Ok(_factory.getAll("SELECT * FROM AMOUNT_D"));
+            var data = getAmount_DView();
+            if (user != null)
+                if (user != "A000")
+                    data = data.Where(data => data.empid == user);
+            string result = JsonConvert.SerializeObject(data);
+            return Ok(result);
         }
 
         // GET api/<Amount_DController>/5
@@ -29,14 +38,15 @@ namespace BackCRM.Controllers
         }
 
         [HttpPost("create")]
-        public dynamic createMember(Amount_D amount, string user)
+        public dynamic create(Amount_D amount, string? user)
         {
             var result = _factory.create(amount);
             return result > 0 ? Ok() : NotFound();
         }
         [HttpPost("edit")]
-        public dynamic editMember(Amount_D amount, string user)
+        public dynamic edit(Amount_D amount, string? user)
         {
+            amount.u_user = user;
             amount.u_sysdt = DateTime.Now;
             var result = _factory.edit(amount);
             return result > 0 ? Ok() : NotFound();
@@ -48,6 +58,24 @@ namespace BackCRM.Controllers
         {
             var result = _factory.delete("DELETE AMOUNT_D WHERE ID = @id", id);
             return result > 0 ? Ok() : NotFound();
+        }
+        private IEnumerable<Amount_DView> getAmount_DView()
+        {
+            List<Amount_D> amount_Ds = _factory.getAll();
+            List<EMPL> empls = new EMPLFactory(_config).getAll();
+            var data = from ad in amount_Ds
+                       join emp in empls on ad.empid equals emp.EMPID
+                       select new Amount_DView
+                       {
+                          id = ad.id,
+                          empid = ad.empid,
+                          empnm = emp.EMPNAME,
+                          amount = ad.amount,
+                          car = ad.car,
+                          memo = ad.memo,
+                          payment = ad.payment,
+                       };
+            return data.ToList();
         }
     }
 }

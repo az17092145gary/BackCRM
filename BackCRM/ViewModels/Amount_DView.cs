@@ -1,9 +1,10 @@
-﻿namespace BackCRM.Model
+﻿namespace BackCRM.ViewModels
 {
-    public class Amount_D
+    public class Amount_DView
     {
         public int? id { get; set; }
         public string? empid { get; set; }
+        public string? empnm { get; set; }
         public string? payment { get; set; }
         public int amount { get; set; }
         public string? car { get; set; }

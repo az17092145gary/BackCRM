@@ -19,7 +19,7 @@ namespace BackCRM.Controllers
         public dynamic Get(string user)
         {
             string sql = @"SELECT EMPL.EMPNAME, NOTE.* FROM NOTE LEFT JOIN EMPL ON NOTE.EMPLID = EMPL.EMPID";
-            if (user != "A00")
+            if (user != "A000")
                 sql += " WHERE EMPLID = '" + user + "'";
             return Ok(_factory.getAll(sql));
         }

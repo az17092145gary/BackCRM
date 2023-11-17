@@ -46,7 +46,7 @@ namespace BackCRM.Controllers
 
         }
 
-        [HttpGet("delete{id}")]
+        [HttpGet("delete")]
         public dynamic delete(string id)
         {
             var result = _factory.delete("DELETE NOTE WHERE ID = @id", id);

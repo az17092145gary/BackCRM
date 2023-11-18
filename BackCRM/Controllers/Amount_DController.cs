@@ -46,6 +46,10 @@ namespace BackCRM.Controllers
                     ErrorMsg = "您沒有權限!!",
                     Status = "000"
                 }));
+            amount.a_user = user;
+            amount.a_sysdt = DateTime.Now;
+            amount.u_user = user;
+            amount.u_sysdt = DateTime.Now;
             var result = _factory.create(amount);
             return result > 0 ? Ok() : NotFound();
         }

@@ -34,12 +34,17 @@ namespace BackCRM.Controllers
         [HttpPost("create")]
         public dynamic createMember(Note note, string user)
         {
+            note.a_user = user;
+            note.a_sysdt = DateTime.Now;
+            note.u_user = user;
+            note.u_sysdt = DateTime.Now;
             var result = _factory.create(note);
             return result > 0 ? Ok() : NotFound();
         }
         [HttpPost("edit")]
         public dynamic editMember(Note note, string user)
         {
+            note.u_user = user;
             note.u_sysdt = DateTime.Now;
             var result = _factory.edit(note);
             return result > 0 ? Ok() : NotFound();

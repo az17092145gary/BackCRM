@@ -52,6 +52,12 @@ namespace BackCRM.Controllers
         [HttpPost("edit")]
         public dynamic edit(Amount_D amount, string? user)
         {
+            if (amount.payment != "P" && user != "A000")
+                return Ok(JsonConvert.SerializeObject(new ErrorModel()
+                {
+                    ErrorMsg = "您沒有權限!!",
+                    Status = "000"
+                }));
             amount.u_user = user;
             amount.u_sysdt = DateTime.Now;
             var result = _factory.edit(amount);

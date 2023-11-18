@@ -40,6 +40,12 @@ namespace BackCRM.Controllers
         [HttpPost("create")]
         public dynamic create(Amount_D amount, string? user)
         {
+            if (amount.payment != "P" && user != "A000")
+                return Ok(JsonConvert.SerializeObject(new ErrorModel()
+                {
+                    ErrorMsg = "您沒有權限!!",
+                    Status = "000"
+                }));
             var result = _factory.create(amount);
             return result > 0 ? Ok() : NotFound();
         }

@@ -4,7 +4,9 @@
     {
         public string empid { get; set; }
         public string emplname { get; set; }
-        public int balance { get; set; }
+        public int pay { get; set; }
+        public int nopay { get; set; }
+        public int nowtotal { get; set; }
         public int total { get; set; }
         public Root root { get; set; }
     }

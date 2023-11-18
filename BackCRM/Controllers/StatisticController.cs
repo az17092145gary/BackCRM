@@ -30,8 +30,10 @@ namespace BackCRM.Controllers
                 {
                     empid = empl.EMPID,
                     emplname = empl.EMPNAME,
-                    balance = payment - notpayment,
-                    total = budget + notpayment - payment,
+                    pay = payment,
+                    nopay = notpayment,
+                    nowtotal = budget + notpayment - payment,
+                    total = budget+ notpayment,
                     root = new()
                     {
                         series = new()
@@ -42,7 +44,7 @@ namespace BackCRM.Controllers
                                 label = new() { show = false },
                                 data = new()
                                 {
-                                    new() { name = "採購總計", value = payment - notpayment },
+                                    new() { name = "採購總計", value = payment },
                                     new() { name = "剩餘預算", value = budget + notpayment - payment },
                                 }
                             }

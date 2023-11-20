@@ -10,7 +10,7 @@ namespace BackCRM.Model
         public LoginFactory(IConfiguration configuration) : base(configuration) { }
         public EMPL LoginEMPLCheck(string sql, string EMPID, string EMPPWD)
         {
-            var result = _conn.QueryFirst<EMPL>(sql, new { EMPID, EMPPWD });
+            var result = _conn.QueryFirstOrDefault<EMPL>(sql, new { EMPID, EMPPWD });
             return result;
         }
     }
